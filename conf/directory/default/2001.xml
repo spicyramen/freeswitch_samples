@@ -1,0 +1,16 @@
+<include>
+  <user id="2001" mailbox="2001">
+  <params>
+  <param name="password" value="2001"/>
+  <param name="vm-password" value="2001"/>
+  </params>
+  <variables>
+  <variable name="accountcode" value="2001"/>
+  <variable name="user_context" value="default"/>
+  <variable name="effective_caller_id_name" value="Gonzalo Gasca Meza"/>
+  <variable name="effective_caller_id_number" value="+14153196128"/>
+  <variable name="outbound_caller_id_name" value="Gonzalo Gasca Meza"/>
+  <variable name="outbound_caller_id_number" value="+14153196128"/>
+  </variables>
+  </user>
+  </include>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<include>
+   <extension name="public_did">
+      <condition field="destination_number" expression="^(2\d{3})$">
+         <action application="bridge" data="sofia/external/$1%$${domain}" />
+      </condition>
+   </extension>
+  <extension name="Simple wideband add-caller conf: member">
+      <condition field="destination_number" expression="^(3501)$">
+         <action application="answer" />
+         <action application="conference" data="$1@wideband" />
+      </condition>
+   </extension>
+   <extension name="Simple wideband add-caller conf: moderator">
+      <condition field="destination_number" expression="^\*(3501$)">
+         <action application="answer" />
+         <!-- set up a few bind_digit_action (BDA) bindings for the moderator -->
+         <action application="bind_digit_action" data="moderator,*1,exec:execute_extension,ASK_FOR_NUMBER__$1 XML default" />
+         <action application="bind_digit_action" data="moderator,*2,exec:execute_extension,CANCEL_LAST_CALL__$1 XML default" />
+         <action application="digit_action_set_realm" data="moderator" />
+         <action application="conference" data="$1@wideband+flags{moderator}" />
+      </condition>
+   </extension>
+   <extension name="Simple ultrawideband add-caller conf: member">
+      <condition field="destination_number" expression="^(3502)$">
+         <action application="answer" />
+         <action application="conference" data="$1@ultrawideband" />
+      </condition>
+   </extension>
+   <extension name="Simple ultrawideband add-caller conf: moderator">
+      <condition field="destination_number" expression="^\*(3502$)">
+         <action application="answer" />
+         <!-- set up a few bind_digit_action (BDA) bindings for the moderator -->
+         <action application="bind_digit_action" data="moderator,*1,exec:execute_extension,ASK_FOR_NUMBER__$1 XML default" />
+         <action application="bind_digit_action" data="moderator,*2,exec:execute_extension,CANCEL_LAST_CALL__$1 XML default" />
+         <action application="digit_action_set_realm" data="moderator" />
+         <action application="conference" data="$1@ultrawideband+flags{moderator}" />
+      </condition>
+   </extension>
+   <extension name="Simple cdquality add-caller conf: member">
+      <condition field="destination_number" expression="^(3503)$">
+         <action application="answer" />
+         <action application="conference" data="$1@cdquality" />
+      </condition>
+   </extension>
+   <extension name="Simple cdquality add-caller conf: moderator">
+      <condition field="destination_number" expression="^\*(3503$)">
+         <action application="answer" />
+         <!-- set up a few bind_digit_action (BDA) bindings for the moderator -->
+         <action application="bind_digit_action" data="moderator,*1,exec:execute_extension,ASK_FOR_NUMBER__$1 XML default" />
+         <action application="bind_digit_action" data="moderator,*2,exec:execute_extension,CANCEL_LAST_CALL__$1 XML default" />
+         <action application="digit_action_set_realm" data="moderator" />
+         <action application="conference" data="$1@cdquality+flags{moderator}" />
+      </condition>
+   </extension>
+   <extension name="Simple video-mcu-stereo add-caller conf: member">
+      <condition field="destination_number" expression="^(3504)$">
+         <action application="answer" />
+         <action application="conference" data="$1@video-mcu-stereo" />
+      </condition>
+   </extension>
+   <extension name="Simple video-mcu-stereo add-caller conf: moderator">
+      <condition field="destination_number" expression="^\*(3504$)">
+         <action application="answer" />
+         <!-- set up a few bind_digit_action (BDA) bindings for the moderator -->
+         <action application="bind_digit_action" data="moderator,*1,exec:execute_extension,ASK_FOR_NUMBER__$1 XML default" />
+         <action application="bind_digit_action" data="moderator,*2,exec:execute_extension,CANCEL_LAST_CALL__$1 XML default" />
+         <action application="digit_action_set_realm" data="moderator" />
+         <action application="conference" data="$1@video-mcu-stereo+flags{moderator}" />
+      </condition>
+   </extension>   
+
+   <extension name="local.example.com">
+      <condition field="destination_number" expression="^(\d{7})$">
+         <action application="set" data="effective_caller_id_number=${outbound_caller_id_number}" />
+         <action application="set" data="effective_caller_id_name=${outbound_caller_id_name}" />
+         <action application="bridge" data="sofia/gateway/twilio/+1${default_areacode}$1" />
+      </condition>
+   </extension>
+   <extension name="domestic.example.com">
+      <condition field="destination_number" expression="^(\d{11})$">
+         <action application="set" data="effective_caller_id_number=${outbound_caller_id_number}" />
+         <action application="set" data="effective_caller_id_name=${outbound_caller_id_name}" />
+         <action application="bridge" data="sofia/gateway/twilio/+$1" />
+      </condition>
+   </extension>
+   <extension name="international.example.com">
+      <condition field="destination_number" expression="^(011\d+)$">
+         <action application="set" data="effective_caller_id_number=${outbound_caller_id_number}" />
+         <action application="set" data="effective_caller_id_name=${outbound_caller_id_name}" />
+         <action application="bridge" data="sofia/gateway/twilio/+$1" />
+      </condition>
+   </extension>
+</include>
